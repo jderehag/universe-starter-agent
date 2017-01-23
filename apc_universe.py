@@ -259,7 +259,7 @@ class Deployment(object):
                                   log_dir=self.log_dir))
 
         worker_cmd = '/usr/bin/python /universe-starter-agent/worker.py '
-        docker_worker_opt = '-ae --no-start -p {port} '.format(port=self.grpc_port)
+        docker_worker_opt = '-ae --timeout 300 --no-start -p {port} '.format(port=self.grpc_port)
 
         for i, _ in enumerate(self.cluster_spec['ps']):
             name = 'ps' + str(i)
