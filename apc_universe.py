@@ -3,9 +3,12 @@ from __future__ import print_function
 import argparse
 import os
 import subprocess
+import sys
 from multiprocessing import Pool
-from future.moves.html.parser import HTMLParser
-
+if sys.version_info < (3,0):
+    from HTMLParser import HTMLParser
+else:
+    from html.parser import HTMLParser
 
 class _HtmlTableParser(HTMLParser):
     def __init__(self):
