@@ -290,11 +290,10 @@ class Deployment(object):
             args += '--workers {workers} '.format(workers=self.cluster_spec_flat)
             args += '--task {id_} '.format(id_=i)
             args += '--remotes vnc://{gym}:{ports}'.format(gym=self.cluster_spec['gym'][i], ports='+'.join(self.gym_ports))
-            docker_worker_opt += '-ht ' + tag if tag else ''
             pool_args.append(dict(name=name,
                                   image=self.agent_image,
                                   args=args,
-                                  docker_opt=docker_worker_opt,
+                                  docker_opt=docker_worker_opt + '-ht ' + tag if tag else '',
                                   memory='1G',
                                   nfs_service_name=self._get_nfs_service_name(),
                                   log_dir=self.log_dir))
