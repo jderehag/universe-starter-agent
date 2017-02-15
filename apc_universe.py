@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 from __future__ import print_function
 import argparse
+import time
 import os
 import subprocess
 import sys
@@ -233,6 +234,7 @@ class Deployment(object):
         assert len(nfs_providers) >= 1, 'No valid nfs providers found!'
         provider = nfs_providers[0]  # Take first valid provider
         self.apc.service_create(name, provider['Namespace'] + '::' + provider['Name'])
+        time.sleep(5)
 
     def create_instances(self):
         self.create_nfs_service(self._get_nfs_service_name())
@@ -325,10 +327,10 @@ def _create_instance(args):
                    args=args['args'],
                    docker_opt=args['docker_opt'],
                    memory=args['memory'])
+    time.sleep(5)
     apc.service_bind(args['nfs_service_name'],
                      args['name'],
                      '--mountpath ' + args['log_dir'])
-
 
 def _start_apc_job(job):
     apc = ApceraApi()
